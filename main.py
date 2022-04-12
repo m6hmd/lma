@@ -12,27 +12,36 @@ server = Flask(__name__)
 logger = telebot.logger
 logger.setLevel(logging.DEBUG)
 w = ['1', "2","3","4",'5', "6","7","8",'9', "0","a","b",'c', "d","e","f",'g', "h","i","j",'k', "l","m","n","o","p",'q', "r","s","t",'u', "v","w","x",'y', "z"]
+num1 = '1234567890'
 @bot.message_handler(content_types=["text"])
 def gen(message):
-    if "/" not in message.text:
-        z = message.text[0]
-        n = len(message.text)
-        n2 = n - 1
-        lists = []
-        for n in range(n):
-            list = []
-            for i in range(n2):
-                (list.append(z))
-            list.insert(n, '*')
-            lists.append("".join(list))
-        for word in lists:
+    if "/" not in message.text :
+        if len(message.text) > 1:
+
+            z = message.text[0]
+            n = len(message.text)
+            n2 = n - 1
+            lists = []
+            for n in range(n):
+                list = []
+                for i in range(n2):
+                    (list.append(z))
+                list.insert(n, '*')
+                lists.append("".join(list))
+            for word in lists:
+                m = ''
+                a = []
+                for i in w:
+                    a.append(word.replace("*", i) + "\n")
+                bot.send_message(message.chat.id, m.join(a))
+        else:
+            listt = []
             m = ''
-            a = []
-            for i in w:
-                a.append(word.replace("*", i) + "\n")
-            bot.send_message(message.chat.id, m.join(a))
+            for numb in num1:
+                listt.append(f"{message.text}{numb}{numb}{numb}{numb}{numb}{numb}\n")
+            bot.send_message(message.chat.id, m.join(listt))
     else:
-        bot.send_message(message.chat.id, "Send Test Like : zzzz")
+        bot.send_message(message.chat.id, "Send Text Like : zzzz")
    
 @server.route(f"/{BOT_TOKEN}", methods=["POST"])
 def redirect_message():
